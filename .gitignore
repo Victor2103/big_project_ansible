@@ -1,0 +1,5 @@
+roles/
+collections/
+key.txt
+.vscode
+__pycache__/

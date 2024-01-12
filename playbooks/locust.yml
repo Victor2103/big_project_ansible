@@ -1,0 +1,18 @@
+- name: install package and source code to use locust
+  hosts: locust_machine 
+  become: yes
+  tasks:
+    - name: download the package locust
+      package:
+        name: python3-locust
+    - name: create the directory workspace 
+      file:
+        dest: ./workspace
+        state: directory
+    - name: copy the locust file to the host machine
+      copy: 
+        src: static_files/locustfile.py
+        dest: ./workspace/locustfile.py
+    - name: launch the locust app 
+      shell: locust -f ./workspace/locustfile.py --web-host=localhost --web-port 2000 &
+    

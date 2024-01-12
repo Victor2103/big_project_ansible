@@ -1,0 +1,5 @@
+---
+ansible_port: 22
+ansible_private_key: ~/.ssh/id_rsa
+ansible_host: PC343
+ansible_ssh_user: v.vitcheff 

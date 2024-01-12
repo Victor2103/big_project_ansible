@@ -1,0 +1,7 @@
+--- 
+roles:
+- src: darkwizard242.locust
+  name: darkwizard242.locust
+
+collections:
+- community.crypto

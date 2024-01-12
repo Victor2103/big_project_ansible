@@ -1,0 +1,33 @@
+- name: Generate a Self Signed OpenSSL certificate
+  hosts: locust_machine
+  become: yes
+  tasks:
+    - name: create a directory
+      file:
+        dest: "{{item}}"
+        state: directory
+      loop:
+        - /etc/ssl/crt
+        - /etc/ssl/csr
+        - /etc/ssl/private
+    - name: create a specific file
+      file:
+        dest: "{{item}}"
+        state: touch
+        mode: u=rw,g=r,o=r
+      loop:
+        - /etc/ssl/csr/ansible.com.csr
+        - /etc/ssl/csr/ansible.com.pem
+        - /etc/ssl/private/ansible.com.pem
+        - /etc/ssl/crt/ansible_CA.crt
+        - /etc/ssl/private/ansible_CA.pem
+    - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+      community.crypto.openssl_privatekey:
+        path: /etc/ssl/private/ansible.com.pem
+        force: yes
+    - name: Create simple self-signed certificate
+      community.crypto.x509_certificate:
+        path: /etc/ssl/private/ansible_CA.pem
+        privatekey_path: /etc/ssl/private/ansible.com.pem
+        provider: selfsigned
+        force: yes

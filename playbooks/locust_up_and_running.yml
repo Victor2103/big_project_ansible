@@ -1,0 +1,4 @@
+- hosts: locust_machine
+  become: yes
+  roles:
+    - darkwizard242.locust
